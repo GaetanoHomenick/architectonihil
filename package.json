@@ -1,0 +1,61 @@
+{
+  "name": "architectonihil",
+  "homepage": "https://github.com/GaetanoHomenick/architectonihil.git",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/GaetanoHomenick/architectonihil.git"
+  },
+  "engines": {
+    "node": ">=16 <=18",
+    "pnpm": "8"
+  },
+  "workspaces": [
+    "packages/*",
+    "examples/*"
+  ],
+  "scripts": {
+    "dev": "pnpm -r -F \"{packages/**}\" dev",
+    "dev:examples": "pnpm run build && pnpm -r -F \"{examples/**}\" dev",
+    "build": "pnpm -F \"{packages/resolver-core}\" build && pnpm -F \"{packages/resolver-react}\" build",
+    "changeset:version": "changeset version && pnpm install --lockfile-only",
+    "changeset:publish": "pnpm build && changeset publish",
+    "lint": "pnpm -F \"{packages/resolver-core}\" lint",
+    "lint:fix": "pnpm -F \"{packages/resolver-core}\" lint:fix",
+    "lint:format": "pnpm -F \"{packages/resolver-core}\" lint:format",
+    "typedoc": "typedoc --options typedoc.json"
+  },
+  "simple-git-hooks": {
+    "pre-commit": "pnpm lint-staged"
+  },
+  "lint-staged": {
+    "*.{js,ts,tsx}": [
+      "pnpm lint:fix",
+      "pnpm lint:format"
+    ],
+    "*.{json,md,mdx,html,css,yml,yaml}": [
+      "pnpm lint:format"
+    ]
+  },
+  "devDependencies": {
+    "@types/node": "^18.17.4",
+    "@typescript-eslint/eslint-plugin": "^5.62.0",
+    "@typescript-eslint/parser": "^5.62.0",
+    "eslint": "^8.46.0",
+    "eslint-config-next": "^13.4.13",
+    "eslint-config-prettier": "^8.10.0",
+    "eslint-plugin-react": "^7.33.1",
+    "lint-staged": "^13.2.3",
+    "prettier": "^2.8.8",
+    "prettier-plugin-tailwindcss": "^0.2.8",
+    "simple-git-hooks": "^2.9.0",
+    "tsup": "^6.7.0",
+    "typedoc": "^0.24.8",
+    "typescript": "^5.1.6"
+  },
+  "dependencies": {
+    "@changesets/changelog-github": "^0.4.8",
+    "@changesets/cli": "^2.26.2"
+  },
+  "author": "JakeHintz",
+  "version": "1.0.0"
+}
